@@ -10,7 +10,7 @@
     <name>eXo Platform - SSO Extension Filter config</name>
     <dependencies>
         <dependency>
-            <groupId>exo.exoplatform.portal</groupId>
+            <groupId>org.exoplatform.portal</groupId>
             <artifactId>exo.portal.component.web.api</artifactId>
             <version>${org.exoplatform.portal.version}</version>
         </dependency>
