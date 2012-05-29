@@ -13,25 +13,32 @@
             <groupId>org.exoplatform.portal</groupId>
             <artifactId>exo.portal.component.web.api</artifactId>
             <version>${org.exoplatform.portal.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
+
 
         <dependency>
             <groupId>org.gatein.sso</groupId>
             <artifactId>sso-agent</artifactId>
             <version>1.1.1-GA</version>
-            <!--
-            <exclusions>
 
+            <exclusions>
                 <exclusion>
                     <groupId>org.gatein.sso</groupId>
                     <artifactId>sso-auth-callback</artifactId>
                 </exclusion>
+
+                <exclusion>
+                    <groupId>org.josso</groupId>
+                    <artifactId>josso-agent</artifactId>
+                </exclusion>
+
                 <exclusion>
                     <groupId>javax.servlet</groupId>
                     <artifactId>servlet-api</artifactId>
@@ -52,10 +59,7 @@
                     <groupId>org.jasig.cas</groupId>
                     <artifactId>cas-client-core</artifactId>
                 </exclusion>
-                <exclusion>
-                    <groupId>org.josso</groupId>
-                    <artifactId>josso-agent</artifactId>
-                </exclusion>
+
                 <exclusion>
                     <groupId>org.josso</groupId>
                     <artifactId>josso-servlet-agent</artifactId>
@@ -85,8 +89,8 @@
                     <groupId>javax.xml</groupId>
                 </exclusion>
             </exclusions>
-            -->
-            <scope>compile</scope>
+
+
         </dependency>
 
         <dependency>
@@ -94,43 +98,55 @@
             <artifactId>exo.kernel.container</artifactId>
             <version>${org.exoplatform.kernel.version}</version>
             <type>jar</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <!--
-                        <exclusions>
-                            <exclusion>
-                                <artifactId>exo.tool.framework.junit</artifactId>
-                                <groupId>org.exoplatform.tool</groupId>
-                            </exclusion>
-                            <exclusion>
-                                <artifactId>commons-beanutils</artifactId>
-                                <groupId>commons-beanutils</groupId>
-                            </exclusion>
-                            <exclusion>
-                                <artifactId>jibx-run</artifactId>
-                                <groupId>org.jibx</groupId>
-                            </exclusion>
-                            <exclusion>
-                                <artifactId>picocontainer</artifactId>
-                                <groupId>picocontainer</groupId>
-                            </exclusion>
-                            <exclusion>
-                                <artifactId>jibx-bind</artifactId>
-                                <groupId>org.jibx</groupId>
-                            </exclusion>
-                            <exclusion>
-                                <artifactId>exo.kernel.commons</artifactId>
-                                <groupId>org.exoplatform.kernel</groupId>
-                            </exclusion>
-                            <exclusion>
-                                <artifactId>jibx-extras</artifactId>
-                                <groupId>org.jibx</groupId>
-                            </exclusion>
-                            <exclusion>
-                                <artifactId>xpp3</artifactId>
-                                <groupId>xpp3</groupId>
-                            </exclusion>
-                        </exclusions>
-                        -->
-                    </dependency>
-                </dependencies>
-            </project>
+            <exclusions>
+                <exclusion>
+                    <artifactId>exo.tool.framework.junit</artifactId>
+                    <groupId>org.exoplatform.tool</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-beanutils</artifactId>
+                    <groupId>commons-beanutils</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jibx-run</artifactId>
+                    <groupId>org.jibx</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>picocontainer</artifactId>
+                    <groupId>picocontainer</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jibx-bind</artifactId>
+                    <groupId>org.jibx</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>exo.kernel.commons</artifactId>
+                    <groupId>org.exoplatform.kernel</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jibx-extras</artifactId>
+                    <groupId>org.jibx</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>xpp3</artifactId>
+                    <groupId>xpp3</groupId>
+                </exclusion>
+            </exclusions>
+            -->
+
+        </dependency>
+    </dependencies>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+</project>
