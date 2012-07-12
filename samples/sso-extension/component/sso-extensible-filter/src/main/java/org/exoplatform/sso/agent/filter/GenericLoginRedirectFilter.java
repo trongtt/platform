@@ -13,22 +13,20 @@ import javax.servlet.http.HttpServletResponse;
 import org.exoplatform.container.web.AbstractFilter;
 import org.exoplatform.web.filter.Filter;
 
-public class GenericLoginRedirectFilter extends AbstractFilter
-  implements Filter 
+public class GenericLoginRedirectFilter extends AbstractFilter implements Filter
 {
   private String loginUrl;
 
-  public void init()
-		    
-		  {
-		    this.loginUrl = System.getProperty("login.redirect.url");
+  public void init() {
+
+		   this.loginUrl = System.getProperty("login.redirect.url");
 	 // loginUrl="http://localhost:8888/opensso/UI/Login?realm=gatein&amp;goto=http://localhost:8080/portal/initiatessologin";
 		  }
 
 		  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 		    throws IOException, ServletException
 		  {
-			  init();
+			init();
 		    HttpServletRequest httpRequest = (HttpServletRequest)request;
 		    HttpServletResponse httpResponse = (HttpServletResponse)response;
 
