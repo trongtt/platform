@@ -21,8 +21,6 @@
             <version>2.5</version>
             <scope>provided</scope>
         </dependency>
-
-
         <dependency>
             <groupId>org.gatein.sso</groupId>
             <artifactId>sso-agent</artifactId>

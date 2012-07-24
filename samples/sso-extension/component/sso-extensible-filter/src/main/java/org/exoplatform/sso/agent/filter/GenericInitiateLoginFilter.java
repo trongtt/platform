@@ -15,103 +15,112 @@ import org.gatein.sso.agent.cas.CASAgent;
 import org.gatein.sso.agent.josso.JOSSOAgent;
 import org.gatein.sso.agent.opensso.OpenSSOAgent;
 
-public class GenericInitiateLoginFilter extends AbstractFilter implements Filter
-	{
-	  private String ssoServerUrl;
-	  private String ssoCookieName;
-	  private boolean casRenewTicket;
-	  private String casServiceUrl;
-	  private String loginUrl;
+public class GenericInitiateLoginFilter extends AbstractFilter implements Filter,Constants {
 
-	  public void init()
-	    throws ServletException
-	  {
-		    this.ssoServerUrl =  System.getProperty("sso.server.url");
-		    this.ssoCookieName = System.getProperty("sso.cookie.name");
-		    this.loginUrl = System.getProperty("login.url");
+    private String ssoServerUrl;
 
-		    String casRenewTicketConfig = System.getProperty("cas.renew.ticket");
-		    if (casRenewTicketConfig != null)
-		    {
-		      this.casRenewTicket = Boolean.parseBoolean(casRenewTicketConfig);
-		    }
+    private String ssoCookieName;
 
-		    String casServiceUrlConfig =  System.getProperty("cas.service.url");
-		    if ((casServiceUrlConfig == null) || (casServiceUrlConfig.trim().length() <= 0))
-		      return;
-		    this.casServiceUrl = casServiceUrlConfig;
-		  
-		 /* System.getProperty("login.url");
-		  System.getProperty("enable.sso");
-		  System.getProperty("enable.sso");
-		  System.getProperty("cas.service.url");
-		  System.getProperty("cas.renew.ticket");
-		  this.ssoCookieName = System.getProperty("sso.cookie.name");
-		  this.ssoServerUrl = System.getProperty("sso.server.url");
-		  System.getProperty("logout.url");
-		  System.getProperty("sso.server.type");
-		  System.getProperty("login.redirect.url");
-		  */
-	  }
+    private boolean casRenewTicket;
 
-	  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-	    throws IOException, ServletException
-	  {
-	    try
-	    {
-	      init();
-	      HttpServletRequest req = (HttpServletRequest)request;
-	      HttpServletResponse resp = (HttpServletResponse)response;
+	private String casServiceUrl;
 
-	      processSSOToken(req, resp);
+	private String loginUrl;
 
-	      String portalContext = req.getContextPath();
-	      if (req.getAttribute("abort") != null)
-	      {
-	        String ssoRedirect = portalContext + "/sso";
-	        resp.sendRedirect(ssoRedirect);
-	        return;
-	      }
+	public void init() throws ServletException {
+
+    this.ssoServerUrl =  System.getProperty(SSO_SERVER_URL);
+
+    this.ssoCookieName = System.getProperty(SSO_COOKIE_NAME);
+
+    this.loginUrl = System.getProperty(LOGIN_URL);
+
+	String casRenewTicketConfig = System.getProperty(CAS_RENEW_TICKET);
+
+    if (casRenewTicketConfig != null) {
+
+        this.casRenewTicket = Boolean.parseBoolean(casRenewTicketConfig);
+	}
+
+	String casServiceUrlConfig =  System.getProperty(CAS_SERVICE_URL);
+
+    if ((casServiceUrlConfig == null) || (casServiceUrlConfig.trim().length() <= 0))
+
+		  return;
+		  this.casServiceUrl = casServiceUrlConfig;
+	}
+
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
+	    try {
+
+            init();
+
+            HttpServletRequest req = (HttpServletRequest)request;
+
+            HttpServletResponse resp = (HttpServletResponse)response;
+
+
+            processSSOToken(req, resp);
+
+
+            String portalContext = req.getContextPath();
+
+            if (req.getAttribute("abort") != null) {
+
+                String ssoRedirect = portalContext + "/sso";
+
+                resp.sendRedirect(ssoRedirect);
+
+                return;
+	        }
 
 	      resp.sendRedirect(this.loginUrl);
+
 	      return;
+	    } catch (Exception e) {
+
+	        throw new ServletException(e);
+
 	    }
-	    catch (Exception e)
-	    {
-	      throw new ServletException(e);
+	}
+
+	public void destroy() {
+
+	}
+
+	private void processSSOToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
+
+        String ticket = httpRequest.getParameter("ticket");
+
+        String jossoAssertion = httpRequest.getParameter("josso_assertion_id");
+
+	    if ((ticket != null) && (ticket.trim().length() > 0)) {
+
+            CASAgent casagent = CASAgent.getInstance(this.ssoServerUrl, this.casServiceUrl);
+
+            casagent.setRenewTicket(this.casRenewTicket);
+
+            casagent.validateTicket(httpRequest, ticket);
+
+	    } else if ((jossoAssertion != null) && (jossoAssertion.trim().length() > 0)) {
+
+	        JOSSOAgent.getInstance().validateTicket(httpRequest, httpResponse);
+
+	    } else {
+
+	        try {
+
+	            OpenSSOAgent.getInstance(this.ssoServerUrl, this.ssoCookieName).validateTicket(httpRequest);
+
+	        } catch (IllegalStateException ilse) {
+
+                httpRequest.setAttribute("abort", Boolean.TRUE);
+
+            }
 	    }
+
 	  }
 
-	  public void destroy()
-	  {
-	  }
-
-	  private void processSSOToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception
-	  {
-	    String ticket = httpRequest.getParameter("ticket");
-	    String jossoAssertion = httpRequest.getParameter("josso_assertion_id");
-
-	    if ((ticket != null) && (ticket.trim().length() > 0))
-	    {
-	      CASAgent casagent = CASAgent.getInstance(this.ssoServerUrl, this.casServiceUrl);
-	      casagent.setRenewTicket(this.casRenewTicket);
-	      casagent.validateTicket(httpRequest, ticket);
-	    }
-	    else if ((jossoAssertion != null) && (jossoAssertion.trim().length() > 0))
-	    {
-	      JOSSOAgent.getInstance().validateTicket(httpRequest, httpResponse);
-	    }
-	    else
-	    {
-	      try
-	      {
-	        OpenSSOAgent.getInstance(this.ssoServerUrl, this.ssoCookieName).validateTicket(httpRequest);
-	      }
-	      catch (IllegalStateException ilse)
-	      {
-	        httpRequest.setAttribute("abort", Boolean.TRUE);
-	      }
-	    }
-	  }
 	}
 	

@@ -13,43 +13,45 @@ import javax.servlet.http.HttpServletResponse;
 import org.exoplatform.container.web.AbstractFilter;
 import org.exoplatform.web.filter.Filter;
 
-public class GenericLoginRedirectFilter extends AbstractFilter implements Filter
-{
-  private String loginUrl;
+public class GenericLoginRedirectFilter extends AbstractFilter implements Filter, Constants {
 
-  public void init() {
+    private String loginUrl;
 
-		   this.loginUrl = System.getProperty("login.redirect.url");
-	 // loginUrl="http://localhost:8888/opensso/UI/Login?realm=gatein&amp;goto=http://localhost:8080/portal/initiatessologin";
-		  }
+    public void init() {
 
-		  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-		    throws IOException, ServletException
-		  {
-			init();
-		    HttpServletRequest httpRequest = (HttpServletRequest)request;
-		    HttpServletResponse httpResponse = (HttpServletResponse)response;
+	    this.loginUrl = System.getProperty(LOGIN_SERVICE_URL);
 
-		    boolean isLoginInProgress = isLoginInProgress(httpRequest);
-		    if (isLoginInProgress)
-		    {
+	}
+
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	    init();
+
+        HttpServletRequest httpRequest = (HttpServletRequest)request;
+
+		HttpServletResponse httpResponse = (HttpServletResponse)response;
+
+		boolean isLoginInProgress = isLoginInProgress(httpRequest);
+
+		if (isLoginInProgress) {
+
 		      httpResponse.sendRedirect(this.loginUrl);
 
 		      return;
-		    }
+		}
 
-		    chain.doFilter(request, response);
-		  }
+		chain.doFilter(request, response);
 
-		  private boolean isLoginInProgress(HttpServletRequest request)
-		  {
-		    String action = request.getRequestURI();
-
-		    return (action != null) && (action.equals(request.getContextPath() + "/sso"));
-		  }
-
-
-		  public void destroy() {
-	
-		  }
 	}
+
+	private boolean isLoginInProgress(HttpServletRequest request) {
+
+	    String action = request.getRequestURI();
+
+		return (action != null) && (action.equals(request.getContextPath() + SSO_PATH));
+	}
+
+
+	public void destroy() {
+	
+	}
+}
