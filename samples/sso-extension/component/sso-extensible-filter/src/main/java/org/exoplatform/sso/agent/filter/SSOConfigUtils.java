@@ -64,7 +64,7 @@ public class SSOConfigUtils implements Constants{
         {
           if ((ssoType.equals(SSO_SERVER_CAS)))
           {
-             loginRedirectUrl=getSsoServerUrl()+"/login?service="+getPlatformDN()+"/initiatessologin";
+             loginRedirectUrl=getSsoServerUrl()+"/login?service="+getPlatformDN()+LOGIN_INITIATE;
 
               if(isCasRenewTicket())
                   loginRedirectUrl=loginRedirectUrl+"&renew=true";
@@ -72,12 +72,12 @@ public class SSOConfigUtils implements Constants{
         
           else if ((ssoType.equals(SSO_SERVER_JOSSO)))
           {
-               loginRedirectUrl=getSsoServerUrl()+"?josso_back_to="+getPlatformDN()+"/initiatessologin";
+               loginRedirectUrl=getSsoServerUrl()+"?josso_back_to="+getPlatformDN()+LOGIN_INITIATE;
           }
 
           else if ((ssoType.equals(SSO_SERVER_OPENAM)))
           {
-              loginRedirectUrl=getSsoServerUrl()+"/UI/Login?realm=gatein&goto="+getPlatformDN()+"/initiatessologin";
+              loginRedirectUrl=getSsoServerUrl()+"/UI/Login?realm=gatein&goto="+getPlatformDN()+LOGIN_INITIATE;
           }
         }
        return  loginRedirectUrl;
@@ -122,10 +122,10 @@ public class SSOConfigUtils implements Constants{
     }
 
     public static String getCasServiceUrl() {
-        return (casServiceUrl=getPlatformDN()+"/initiatessologin");
+        return (casServiceUrl=getPlatformDN()+LOGIN_INITIATE);
     }
 
     public static String getLoginUrl() {
-       return (loginUrl=getPlatformDN()+"/dologin");
+       return (loginUrl=getPlatformDN()+ACTION_DOLOGIN);
     }
 }

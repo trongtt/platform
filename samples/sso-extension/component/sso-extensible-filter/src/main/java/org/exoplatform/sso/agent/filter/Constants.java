@@ -12,6 +12,9 @@ public interface Constants {
     public static final String SSO_SERVER_URL = "sso.server.url";
     public static final String PLATFORM_DN = "sso.platform.dn";
     public static final String SSO_SERVER_TYPE = "sso.server.type";
+    public static final String ACTION_DOLOGIN  = "/dologin";
+    public static final String LOGIN_INITIATE="/initiatessologin";
+
 
     public static final String DEFAULT_PLATFORM_DN="http://localhost:8080/portal";
 
