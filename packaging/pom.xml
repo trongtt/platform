@@ -19,6 +19,7 @@
     <module>jboss-eap-ears</module>
     <module>jboss-bundle</module>
     <module>platform-for-eppsp</module>
+      <module>sso-bundle</module>
     <!--module>enterprise</module-->
     <module>source</module>
   </modules>
