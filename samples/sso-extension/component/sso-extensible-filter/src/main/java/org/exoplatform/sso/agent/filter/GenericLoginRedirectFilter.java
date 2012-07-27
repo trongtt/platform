@@ -18,9 +18,7 @@ public class GenericLoginRedirectFilter extends AbstractFilter implements Filter
     private String loginUrl;
 
     public void init() {
-
-	    this.loginUrl = System.getProperty(LOGIN_SERVICE_URL);
-
+	    this.loginUrl = SSOConfigUtils.getLoginRedirectUrl();
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

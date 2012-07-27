@@ -18,22 +18,26 @@ import org.exoplatform.web.filter.Filter;
 public  class GenericLogoutFilter  extends AbstractFilter implements Filter,Constants {
 
 	protected String logoutUrl;
-
     protected String ssoServerType;
 
 	private static final String fileEncoding = System.getProperty(FILE_ENCODING);
 		
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	void init(HttpServletRequest httpRequest)  throws UnsupportedEncodingException
+    {
+        logoutUrl=SSOConfigUtils.getLogoutUrl(httpRequest);
+        ssoServerType=SSOConfigUtils.getSsoServerType();
+
+    }
+
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest)request;
 
         HttpServletResponse httpResponse = (HttpServletResponse)response;
 
-        logoutUrl=  System.getProperty(LOGOUT_URL);
+        init(httpRequest);
 
-        ssoServerType=	  System.getProperty(SSO_SERVER_TYPE);
- 
-		boolean isLogoutInProgress = isLogoutInProgress(httpRequest);
+        boolean isLogoutInProgress = isLogoutInProgress(httpRequest);
 
 		if (isLogoutInProgress) {
 
@@ -41,12 +45,17 @@ public  class GenericLogoutFilter  extends AbstractFilter implements Filter,Cons
 
                 httpRequest.getSession().setAttribute(SSO_LOGOUT_FLAG, Boolean.TRUE);
 
-                String redirectUrl = getRedirectUrl(httpRequest);
+               /* String redirectUrl = getRedirectUrl(httpRequest);
 
                 redirectUrl = httpResponse.encodeRedirectURL(redirectUrl);
 
-                httpResponse.sendRedirect(redirectUrl);
-			    return;
+                httpResponse.sendRedirect(redirectUrl);  */
+
+                httpResponse.sendRedirect(logoutUrl);
+
+                if(((HttpServletRequest) request).getSession()!=null) ((HttpServletRequest) request).getSession().invalidate();
+
+                return;
             }
 
             httpRequest.getSession().removeAttribute(SSO_LOGOUT_FLAG);
@@ -65,7 +74,7 @@ public  class GenericLogoutFilter  extends AbstractFilter implements Filter,Cons
         return (action != null) && (action.equals("Logout"));
 	}
 
-	protected String getRedirectUrl(HttpServletRequest httpRequest) {
+/*	protected String getRedirectUrl(HttpServletRequest httpRequest) {
 
         String redirectUrl=null;
 		try {
@@ -94,7 +103,7 @@ public  class GenericLogoutFilter  extends AbstractFilter implements Filter,Cons
 	        throw new RuntimeException(e);
 	    }
 	}
-
+    */
 	public void destroy() {
 		
 	}

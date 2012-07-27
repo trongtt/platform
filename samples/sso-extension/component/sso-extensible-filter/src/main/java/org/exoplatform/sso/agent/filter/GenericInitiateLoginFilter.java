@@ -29,20 +29,13 @@ public class GenericInitiateLoginFilter extends AbstractFilter implements Filter
 
 	public void init() throws ServletException {
 
-    this.ssoServerUrl =  System.getProperty(SSO_SERVER_URL);
+    this.ssoServerUrl =  SSOConfigUtils.getSsoServerUrl();
 
-    this.ssoCookieName = System.getProperty(SSO_COOKIE_NAME);
+    this.ssoCookieName = SSOConfigUtils.getSsoCookieName();
 
-    this.loginUrl = System.getProperty(LOGIN_URL);
+    this.loginUrl = SSOConfigUtils.getLoginUrl();
 
-	String casRenewTicketConfig = System.getProperty(CAS_RENEW_TICKET);
-
-    if (casRenewTicketConfig != null) {
-
-        this.casRenewTicket = Boolean.parseBoolean(casRenewTicketConfig);
-	}
-
-	String casServiceUrlConfig =  System.getProperty(CAS_SERVICE_URL);
+ 	String casServiceUrlConfig =  SSOConfigUtils.getCasServiceUrl();
 
     if ((casServiceUrlConfig == null) || (casServiceUrlConfig.trim().length() <= 0))
 
@@ -68,7 +61,7 @@ public class GenericInitiateLoginFilter extends AbstractFilter implements Filter
 
             if (req.getAttribute("abort") != null) {
 
-                String ssoRedirect = portalContext + "/sso";
+                String ssoRedirect = portalContext + SSO_PATH;
 
                 resp.sendRedirect(ssoRedirect);
 
@@ -91,9 +84,9 @@ public class GenericInitiateLoginFilter extends AbstractFilter implements Filter
 
 	private void processSSOToken(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
 
-        String ticket = httpRequest.getParameter("ticket");
+        String ticket = httpRequest.getParameter(CAS_TICKET);
 
-        String jossoAssertion = httpRequest.getParameter("josso_assertion_id");
+        String jossoAssertion = httpRequest.getParameter(JOSSO_ASSERTION_ID);
 
 	    if ((ticket != null) && (ticket.trim().length() > 0)) {
 
