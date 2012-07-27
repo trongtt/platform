@@ -26,9 +26,7 @@
 					<type>zip</type>
 					<scope>provided</scope>
 				</dependency>
-
 			</dependencies>
-
 			<build>
 				<finalName>eXo-Platform-SSO-${project.version}</finalName>
 				<plugins>
@@ -62,8 +60,8 @@
 
 							<!--
  | Step 02: copy Filter and component service artifacts
--->		   <execution>
-								<id>01-copy-FilterandComponent-service</id>
+-->		                    <execution>
+								<id>02-copy-FilterandComponent-service</id>
 								<phase>prepare-package</phase>
 								<goals>
 									<goal>copy</goal>
@@ -103,7 +101,6 @@
                         <version>1.6</version>
                         <executions>
                             <execution>
-
                                 <!--
                                  |
                                 -->
