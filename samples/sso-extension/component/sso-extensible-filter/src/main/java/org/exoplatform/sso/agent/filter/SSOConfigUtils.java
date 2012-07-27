@@ -33,6 +33,7 @@ public class SSOConfigUtils implements Constants{
              platformDN.substring(0,platformDN.length()-2);
             }
         }
+        else platformDN=DEFAULT_PLATFORM_DN;
         return platformDN;
     }
 
