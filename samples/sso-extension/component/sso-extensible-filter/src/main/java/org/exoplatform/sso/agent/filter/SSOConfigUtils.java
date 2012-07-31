@@ -26,14 +26,14 @@ public class SSOConfigUtils implements Constants{
    
     public static String getPlatformDN() {
         platformDN= System.getProperty(PLATFORM_DN);
-        if ((platformDN != null))
-        {
-            if (platformDN.endsWith("/"))
+
+        if ((platformDN != null)&&(platformDN.endsWith("/")))
             {
              platformDN.substring(0,platformDN.length()-2);
             }
-        }
-        else platformDN=DEFAULT_PLATFORM_DN;
+
+        if(platformDN == null) platformDN=DEFAULT_PLATFORM_DN;
+
         return platformDN;
     }
 
