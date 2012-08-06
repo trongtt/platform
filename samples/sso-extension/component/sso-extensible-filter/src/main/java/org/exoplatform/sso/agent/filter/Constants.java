@@ -18,7 +18,7 @@ public interface Constants {
 
     public static final String DEFAULT_PLATFORM_DN="http://localhost:8080/portal";
 
-    public static final String SSO_COOKIE_NAME = "sso.cookie.name" ;
+    public static final String SSO_COOKIE_NAME = "sso.openam.cookie.name" ;
     //public static final String LOGIN_URL = "login.url" ;
     public static final String CAS_RENEW_TICKET = "sso.cas.renew.ticket" ;
     //public static final String CAS_SERVICE_URL = "cas.service.url" ;
