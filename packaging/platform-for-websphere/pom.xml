@@ -506,6 +506,12 @@
 											<type>war</type>
 											<destFileName>workflow.war</destFileName>
 										</artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.exoplatform.platform</groupId>
+                                            <artifactId>exo.platform.websphere.integration.login</artifactId>
+                                            <version>${project.version}</version>
+                                            <outputDirectory>${project.build.directory}/websphere/binaries/platform/lib</outputDirectory>
+                                        </artifactItem>
 									</artifactItems>
 								</configuration>
 							</execution>
@@ -522,7 +528,6 @@
                                     <target>
                                         <mkdir dir="${project.build.directory}/websphere/scripts" />
                                         <mkdir dir="${project.build.directory}/websphere/docs" />
-                                        <mkdir dir="${project.build.directory}/websphere/binaries/platform/lib" />
                                         <mkdir dir="${project.build.directory}/websphere/binaries/platform/META-INF" />
                                         <copy file="${project.basedir}/src/main/resources/META-INF/application.xml" tofile="${project.build.directory}/websphere/binaries/platform/META-INF/application.xml" overwrite="true" />
                                         <copy file="${project.basedir}/src/main/resources/META-INF/ibm-application-bnd.xml" tofile="${project.build.directory}/websphere/binaries/platform/META-INF/ibm-application-bnd.xml" overwrite="true" />
