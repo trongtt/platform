@@ -234,5 +234,6 @@
 		<module>doc</module>
 		<module>packaging</module>
 		<module>testsuite</module>
+        <module>websphere</module>
 	</modules>
 </project>
