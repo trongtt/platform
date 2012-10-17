@@ -528,6 +528,7 @@
                                     <target>
                                         <mkdir dir="${project.build.directory}/websphere/scripts" />
                                         <mkdir dir="${project.build.directory}/websphere/docs" />
+                                        <mkdir dir="${project.build.directory}/websphere/conf" />
                                         <mkdir dir="${project.build.directory}/websphere/binaries/platform/META-INF" />
                                         <copy file="${project.basedir}/src/main/resources/META-INF/application.xml" tofile="${project.build.directory}/websphere/binaries/platform/META-INF/application.xml" overwrite="true" />
                                         <copy file="${project.basedir}/src/main/resources/META-INF/ibm-application-bnd.xml" tofile="${project.build.directory}/websphere/binaries/platform/META-INF/ibm-application-bnd.xml" overwrite="true" />
@@ -535,6 +536,7 @@
                                         <copy file="${project.basedir}/src/main/resources/scripts/SetupDB.py" tofile="${project.build.directory}/websphere/scripts/SetupDB.py" overwrite="true" />
                                         <copy file="${project.basedir}/src/main/resources/scripts/SetupEnvironment.py" tofile="${project.build.directory}/websphere/scripts/SetupEnvironment.py" overwrite="true" />
                                         <copy file="${project.basedir}/src/main/resources/scripts/SetupJaas.py" tofile="${project.build.directory}/websphere/scripts/SetupJaas.py" overwrite="true" />
+                                        <copy file="${project.basedir}/src/main/resources/README.txt" tofile="${project.build.directory}/websphere/README.txt" overwrite="true" />
 
                                         <unzip src="${project.build.directory}/websphere/binaries/platform/platform-extension.war" dest="${project.build.directory}/websphere/binaries/platform/platform-extension/unzip" />
                                         <delete>
@@ -547,8 +549,8 @@
                                         <zip destfile="${project.build.directory}/websphere/binaries/platform/platform-extension.war" basedir="${project.build.directory}/websphere/binaries/platform/platform-extension/unzip" />
                                         <delete dir="${project.build.directory}/websphere/binaries/platform/platform-extension" />
 
-                                        <zip destfile="${project.build.directory}/websphere/binaries/platform.ear" basedir="${project.build.directory}/websphere/binaries/platform" />
-                                        <delete dir="${project.build.directory}/websphere/binaries/platform" />
+                                        <zip destfile="${project.build.directory}/websphere/platform.ear" basedir="${project.build.directory}/websphere/binaries/platform" />
+                                        <delete dir="${project.build.directory}/websphere/binaries" />
 
                                     </target>
                                 </configuration>
