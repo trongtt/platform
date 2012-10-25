@@ -144,6 +144,14 @@ function getModule(params)
 	   addDependency(new Project("org.exoplatform.platform", "platform-sample-default-website-config", "jar", module.version));
    module.sample.defaultWebsite.webapp.deployName = "default-website";
    
+   // ide extension
+   module.sample.ide = {};
+   
+   module.sample.ide.webapp =  new Project("org.exoplatform.platform", "platform-sample-ide-extension-webapp", "war", module.version).
+	   addDependency(new Project("org.exoplatform.platform", "platform-sample-ide-extension-config", "jar", module.version));
+   module.sample.ide.webapp.deployName = "ide-extension";
+   
+   
     // Crash
    module.crash = {};
    module.crash.webapp = new Project("org.crsh","crsh.jcr.exo", "war", crashVersion);

@@ -1655,6 +1655,24 @@
       <scope>provided</scope>
       <type>war</type>
     </dependency>
+	
+	
+	<dependency>
+      <groupId>org.exoplatform.platform</groupId>
+      <artifactId>platform-sample-ide-extension-config</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.platform</groupId>
+      <artifactId>platform-sample-ide-extension-webapp</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+      <type>war</type>
+    </dependency>
+	
+	
     <dependency>
       <groupId>org.exoplatform.platform</groupId>
       <artifactId>platform-sample-gadgets-sample-exo-gadget-resources</artifactId>
